@@ -51,4 +51,6 @@
     <string name="home" >home</string>
     <string name="top" >top</string>
     <string name="down" >down</string>
+    <string name="volup">volup</string>
+    <string name="voldown">voldown</string>
 </resources>

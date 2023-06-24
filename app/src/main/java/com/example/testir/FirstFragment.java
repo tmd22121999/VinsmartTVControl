@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.ConsumerIrManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ public class FirstFragment extends Fragment  implements View.OnClickListener {
         binding.buttonOk.setOnClickListener(this);
         binding.buttonHome.setOnClickListener(this);
         binding.buttonBack.setOnClickListener(this);
+        binding.buttonVoldown.setOnClickListener(this);
+        binding.buttonVolup.setOnClickListener(this);
         return binding.getRoot();
 
     }
@@ -58,6 +61,8 @@ public class FirstFragment extends Fragment  implements View.OnClickListener {
     int[] TVBack = {8998, 4548,  658, 498,  658, 498,  658, 498,  658, 500,  656, 1656,  658, 498,  658, 1656,  658, 498,  658, 1656,  658, 1656,  658, 1656,  656, 1656,  658, 500,  656, 1658,  656, 500,  656, 1658,  656, 1658,  656, 1658,  656, 1658,  656, 1656,  656, 1658,  656, 1658,  656, 500,  656, 500,  658, 500,  654, 502,  656, 500,  656, 502,  656, 500,  656, 500,  656, 1658,  656, 1658,  654, 40182,  8978, 2306,  586};
     int[] TVHome = {8934, 4616,  592, 564,  592, 564,  594, 564,  594, 562,  594, 1722,  594, 562,  592, 1722,  594, 562,  594, 1720,  594, 1720,  594, 1718,  596, 1720,  594, 562,  618, 1696,  620, 536,  622, 1692,  620, 536,  622, 534,  624, 1690,  624, 532,  624, 1690,  624, 1690,  626, 530,  628, 530,  628, 1684,  628, 1686,  630, 526,  630, 1684,  630, 526,  630, 526,  630, 1684,  630, 1684,  632, 40214,  9024, 2258,  634};
 
+    int[] TVVolDown = {8922, 4626,  606, 550,  592, 564,  606, 550,  608, 548,  608, 1706,  608, 550,  584, 1730,  584, 572,  584, 1730,  584, 1732,  582, 1730,  584, 1730,  582, 574,  584, 1730,  584, 574,  582, 1730,  584, 1730,  584, 572,  584, 572,  582, 1732,  582, 1732,  580, 576,  562, 594,  582, 574,  564, 592,  562, 1752,  564, 1750,  562, 594,  562, 594,  564, 1752,  562, 1752,  562, 1752,  562, 40278,  8956, 2328,  564};
+    int[] TVVolUp = {8970, 4578,  630, 526,  630, 526,  630, 526,  630, 528,  630, 1684,  630, 526,  630, 1686,  628, 528,  626, 1690,  626, 1686,  626, 1690,  626, 1690,  624, 530,  626, 1690,  624, 532,  620, 1694,  620, 536,  620, 536,  622, 534,  620, 1694,  622, 1692,  620, 536,  596, 560,  596, 562,  594, 1720,  592, 1722,  592, 1720,  568, 588,  568, 588,  568, 1746,  566, 1746,  568, 1746,  566, 40282,  8974, 2334,  556};
 
     int carrierFrequency = 38000; //38kHz remote frequency
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -89,9 +94,16 @@ public class FirstFragment extends Fragment  implements View.OnClickListener {
         Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         ConsumerIrManager ir_service = (ConsumerIrManager) context.getSystemService(Context.CONSUMER_IR_SERVICE);
         int[] rawData ={};
+        Log.d("MyActivity", (String)v.getTag());
         switch ((String)v.getTag()) {
             case "down":
                 rawData =TVDown;
+                break;
+            case "volDown":
+                rawData =TVVolDown;
+                break;
+            case "volUp":
+                rawData =TVVolUp;
                 break;
             case "top":
                 rawData =TVTop;
@@ -117,10 +129,10 @@ public class FirstFragment extends Fragment  implements View.OnClickListener {
             default:
                 break;
         }
-        if (rawData==null) {
-            return;
-        }
-        vib.vibrate(500);
+//        if (rawData==null) {
+//            return;
+//        }
+//        vib.vibrate(500);
         ir_service.transmit(carrierFrequency , rawData);
 //        NavHostFragment.findNavController(FirstFragment.this)
 //                .navigate(R.id.action_FirstFragment_to_SecondFragment);
